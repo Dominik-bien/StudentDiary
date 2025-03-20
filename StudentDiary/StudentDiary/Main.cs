@@ -1,4 +1,3 @@
-
 using StudentDiary.Properties;
 
 namespace StudentDiary
@@ -7,10 +6,8 @@ namespace StudentDiary
     {
         private delegate void DisplayMessage(string message);
 
-
         private FileHelper<List<Student>> _fileHelper =
-            new FileHelper<List<Student>>
-            (Program.FilePath);
+            new FileHelper<List<Student>>(Program.FilePath);
 
         public bool IsMaximize
         {
@@ -26,14 +23,21 @@ namespace StudentDiary
 
         public Main()
         {
-
             InitializeComponent();
+            InitializeComboBox();
             RefreshDiary();
             SetColumnsHeader();
 
             if (IsMaximize)
                 WindowState = FormWindowState.Maximized;
 
+            cmbSelectClass.SelectedIndexChanged += cmbSelectClass_SelectedIndexChanged;
+        }
+
+        private void InitializeComboBox()
+        {
+            cmbSelectClass.DataSource = new List<string> {"All", "1", "2", "3" };
+            cmbSelectClass.SelectedItem = "All"; 
         }
 
         private void SetColumnsHeader()
@@ -47,7 +51,8 @@ namespace StudentDiary
             dgvDiary.Columns[6].HeaderText = "Technology";
             dgvDiary.Columns[7].HeaderText = "Psysics";
             dgvDiary.Columns[8].HeaderText = "Comments";
-
+            dgvDiary.Columns[9].HeaderText = "Extra Activities";
+            dgvDiary.Columns[10].HeaderText = "Class";
         }
 
         private void RefreshDiary()
@@ -56,18 +61,34 @@ namespace StudentDiary
             dgvDiary.DataSource = students;
         }
 
+        private void FilterDiary()
+        {
+            var students = _fileHelper.DeserializeFromFile();
+            string selectedClass = cmbSelectClass.SelectedItem?.ToString();
 
+            if (string.IsNullOrEmpty(selectedClass) || selectedClass == "All")
+            {
+                dgvDiary.DataSource = students;
+            }
+            else if (int.TryParse(selectedClass, out int classId))
+            {
+                dgvDiary.DataSource = students.Where(s => s.IdGroup == classId).ToList();
+            }
+        }
 
-
+        private void cmbSelectClass_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FilterDiary();
+        }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            var addEdtiStudent = new AddEditStudent();
-            addEdtiStudent.FormClosing += AddEdtiStudent_FormClosing;
-            addEdtiStudent.ShowDialog();
+            var addEditStudent = new AddEditStudent();
+            addEditStudent.FormClosing += AddEditStudent_FormClosing;
+            addEditStudent.ShowDialog();
         }
 
-        private void AddEdtiStudent_FormClosing(object? sender, FormClosingEventArgs e)
+        private void AddEditStudent_FormClosing(object? sender, FormClosingEventArgs e)
         {
             RefreshDiary();
         }
@@ -82,8 +103,7 @@ namespace StudentDiary
 
             var addEditStudent = new AddEditStudent(
                 Convert.ToInt32(dgvDiary.SelectedRows[0].Cells[0].Value));
-            addEditStudent.FormClosing += AddEdtiStudent_FormClosing;
-
+            addEditStudent.FormClosing += AddEditStudent_FormClosing;
             addEditStudent.ShowDialog();
         }
 
@@ -95,8 +115,7 @@ namespace StudentDiary
                 return;
             }
 
-            var selectedStudent =
-                dgvDiary.SelectedRows[0];
+            var selectedStudent = dgvDiary.SelectedRows[0];
             var confirmDelete = MessageBox.Show($"Do you want remove: {(selectedStudent.Cells[1].Value.ToString() + " " + selectedStudent.Cells[2].Value.ToString()).Trim()}?",
                  "Removing Student", MessageBoxButtons.OKCancel);
 
@@ -105,8 +124,6 @@ namespace StudentDiary
                 DeleteStudent(Convert.ToInt32(selectedStudent.Cells[0].Value));
                 RefreshDiary();
             }
-
-
         }
 
         private void DeleteStudent(int Id)
@@ -118,20 +135,13 @@ namespace StudentDiary
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-
             RefreshDiary();
         }
 
         private void Main_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (WindowState == FormWindowState.Maximized)
-
-                IsMaximize = true;
-            else
-                IsMaximize = false;
-
+            IsMaximize = WindowState == FormWindowState.Maximized;
             Settings.Default.Save();
-
         }
     }
 }

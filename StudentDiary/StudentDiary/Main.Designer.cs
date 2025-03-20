@@ -33,15 +33,18 @@
             btnDelete = new Button();
             btnRefresh = new Button();
             dgvDiary = new DataGridView();
+            cmbSelectClass = new ComboBox();
+            label1 = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvDiary).BeginInit();
             SuspendLayout();
             // 
             // btnAdd
             // 
             btnAdd.BackColor = Color.Orange;
-            btnAdd.Location = new Point(12, 12);
+            btnAdd.Location = new Point(17, 20);
+            btnAdd.Margin = new Padding(4, 5, 4, 5);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(75, 23);
+            btnAdd.Size = new Size(107, 38);
             btnAdd.TabIndex = 0;
             btnAdd.Text = "Add";
             btnAdd.UseVisualStyleBackColor = false;
@@ -50,9 +53,10 @@
             // btnEdit
             // 
             btnEdit.BackColor = Color.LightGreen;
-            btnEdit.Location = new Point(140, 12);
+            btnEdit.Location = new Point(200, 20);
+            btnEdit.Margin = new Padding(4, 5, 4, 5);
             btnEdit.Name = "btnEdit";
-            btnEdit.Size = new Size(75, 23);
+            btnEdit.Size = new Size(107, 38);
             btnEdit.TabIndex = 1;
             btnEdit.Text = "Edit";
             btnEdit.UseVisualStyleBackColor = false;
@@ -61,9 +65,10 @@
             // btnDelete
             // 
             btnDelete.BackColor = SystemColors.MenuHighlight;
-            btnDelete.Location = new Point(265, 12);
+            btnDelete.Location = new Point(379, 20);
+            btnDelete.Margin = new Padding(4, 5, 4, 5);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(75, 23);
+            btnDelete.Size = new Size(107, 38);
             btnDelete.TabIndex = 2;
             btnDelete.Text = "Delete";
             btnDelete.UseVisualStyleBackColor = false;
@@ -72,9 +77,10 @@
             // btnRefresh
             // 
             btnRefresh.BackColor = Color.IndianRed;
-            btnRefresh.Location = new Point(389, 12);
+            btnRefresh.Location = new Point(556, 20);
+            btnRefresh.Margin = new Padding(4, 5, 4, 5);
             btnRefresh.Name = "btnRefresh";
-            btnRefresh.Size = new Size(75, 23);
+            btnRefresh.Size = new Size(107, 38);
             btnRefresh.TabIndex = 3;
             btnRefresh.Text = "Refresh";
             btnRefresh.UseVisualStyleBackColor = false;
@@ -86,29 +92,53 @@
             dgvDiary.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvDiary.BackgroundColor = Color.White;
             dgvDiary.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvDiary.Location = new Point(3, 55);
+            dgvDiary.Location = new Point(4, 92);
+            dgvDiary.Margin = new Padding(4, 5, 4, 5);
             dgvDiary.Name = "dgvDiary";
             dgvDiary.RowHeadersVisible = false;
+            dgvDiary.RowHeadersWidth = 62;
             dgvDiary.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvDiary.Size = new Size(1001, 394);
+            dgvDiary.Size = new Size(1430, 657);
             dgvDiary.TabIndex = 4;
+            // 
+            // cmbSelectClass
+            // 
+            cmbSelectClass.FormattingEnabled = true;
+            cmbSelectClass.Items.AddRange(new object[] { "All", "1", "2", "3" });
+            cmbSelectClass.Location = new Point(844, 25);
+            cmbSelectClass.Name = "cmbSelectClass";
+            cmbSelectClass.Size = new Size(182, 33);
+            cmbSelectClass.TabIndex = 5;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(1053, 28);
+            label1.Name = "label1";
+            label1.Size = new Size(57, 25);
+            label1.TabIndex = 6;
+            label1.Text = "Class ";
             // 
             // Main
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
-            ClientSize = new Size(1005, 450);
+            ClientSize = new Size(1436, 750);
+            Controls.Add(label1);
+            Controls.Add(cmbSelectClass);
             Controls.Add(dgvDiary);
             Controls.Add(btnRefresh);
             Controls.Add(btnDelete);
             Controls.Add(btnEdit);
             Controls.Add(btnAdd);
+            Margin = new Padding(4, 5, 4, 5);
             Name = "Main";
             Text = "Student Diary";
             FormClosed += Main_FormClosed;
             ((System.ComponentModel.ISupportInitialize)dgvDiary).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -118,5 +148,7 @@
         private Button btnDelete;
         private Button btnRefresh;
         private DataGridView dgvDiary;
+        private ComboBox cmbSelectClass;
+        private Label label1;
     }
 }
