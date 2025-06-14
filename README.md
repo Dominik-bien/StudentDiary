@@ -1,2 +1,2 @@
 # StudentDiary
-This my firstAppliaction to management students 
+This is my first appliacion writing on WindowsForms to management students Diary
